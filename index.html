@@ -30,19 +30,19 @@
       background-color: #d60032;
       border-radius: 50%;
       opacity: 0.8;
-      animation: wiggleFloat linear infinite;
+      animation: bounceFloat linear infinite;
     }
 
-    @keyframes wiggleFloat {
+    @keyframes bounceFloat {
       0% {
-        transform: translate(0px, 0px) rotate(0deg);
+        transform: translate(0px, -100px) rotate(0deg);
         opacity: 0.8;
       }
       25% {
-        transform: translate(-10px, 30vh) rotate(90deg);
+        transform: translate(-15px, 30vh) rotate(90deg);
       }
       50% {
-        transform: translate(10px, 60vh) rotate(180deg);
+        transform: translate(15px, 60vh) rotate(180deg);
       }
       75% {
         transform: translate(-10px, 90vh) rotate(270deg);
@@ -105,17 +105,19 @@
       50% { transform: rotate(5deg); }
     }
 
-    .music-note {
+    .music-toggle {
       position: fixed;
-      bottom: 15px;
-      right: 15px;
-      z-index: 99;
-      background: #ffe1ef;
-      padding: 8px 14px;
+      bottom: 20px;
+      right: 20px;
+      background: #ffd5ea;
+      padding: 10px 15px;
       border-radius: 25px;
-      font-size: 0.9em;
+      font-size: 14px;
       cursor: pointer;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      z-index: 10;
+      font-weight: bold;
+      color: #a3004b;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -123,7 +125,7 @@
   <!-- Confetti -->
   <div class="confetti" id="confetti-container"></div>
 
-  <!-- Invite Card -->
+  <!-- Invitation -->
   <div class="invite">
     <h1>Clown Cake + Gossip Session</h1>
     <p>You’re officially invited to the silliest, sweetest, juiciest event of the week!</p>
@@ -135,7 +137,7 @@
     <div class="rsvp">
       RSVP or be haunted by gossip FOMO!
     </div>
-    <img class="clown-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Circus_clown_icon.png/600px-Circus_clown_icon.png" alt="Clown" />
+    <img class="clown-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Circus_clown_icon.png/600px-Circus_clown_icon.png" alt="clown" />
   </div>
 
   <!-- Music -->
@@ -143,39 +145,37 @@
     <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_1d2c93b07f.mp3?filename=funny-clown-112965.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
-  <div class="music-note" onclick="toggleMusic()">Play Music</div>
+  <div class="music-toggle" onclick="toggleMusic()">Play Music</div>
 
-  <!-- Confetti Script -->
+  <!-- Confetti JS -->
   <script>
     const confettiContainer = document.getElementById('confetti-container');
-    const confettiCount = 40;
+    const confettiCount = 50;
 
     for (let i = 0; i < confettiCount; i++) {
       const dot = document.createElement('div');
       dot.classList.add('dot');
 
       const left = Math.random() * 100;
-      const offsetY = Math.random() * -100;
+      const offsetY = Math.random() * -200;
       dot.style.left = `${left}%`;
       dot.style.transform = `translateY(${offsetY}px)`;
-
-      dot.style.animationDuration = `${6 + Math.random() * 4}s`;
+      dot.style.animationDuration = `${5 + Math.random() * 4}s`;
       dot.style.animationDelay = `${Math.random() * 5}s`;
 
       confettiContainer.appendChild(dot);
     }
 
-    // Music toggle
     const music = document.getElementById('bg-music');
-    const note = document.querySelector('.music-note');
+    const toggleBtn = document.querySelector('.music-toggle');
 
     function toggleMusic() {
       if (music.paused) {
         music.play();
-        note.textContent = 'Pause Music';
+        toggleBtn.textContent = "Pause Music";
       } else {
         music.pause();
-        note.textContent = 'Play Music';
+        toggleBtn.textContent = "Play Music";
       }
     }
   </script>

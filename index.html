@@ -30,12 +30,12 @@
       background-color: #d60032;
       border-radius: 50%;
       opacity: 0.8;
-      animation: bounceFloat linear infinite;
+      animation: wiggleFloat linear infinite;
     }
 
-    @keyframes bounceFloat {
+    @keyframes wiggleFloat {
       0% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(0px, 0px) rotate(0deg);
         opacity: 0.8;
       }
       25% {
@@ -104,13 +104,26 @@
       0%, 100% { transform: rotate(-5deg); }
       50% { transform: rotate(5deg); }
     }
+
+    .music-note {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 99;
+      background: #ffe1ef;
+      padding: 8px 14px;
+      border-radius: 25px;
+      font-size: 0.9em;
+      cursor: pointer;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
   <!-- Confetti -->
   <div class="confetti" id="confetti-container"></div>
 
-  <!-- Invitation Card -->
+  <!-- Invite Card -->
   <div class="invite">
     <h1>Clown Cake + Gossip Session</h1>
     <p>You’re officially invited to the silliest, sweetest, juiciest event of the week!</p>
@@ -122,16 +135,17 @@
     <div class="rsvp">
       RSVP or be haunted by gossip FOMO!
     </div>
-    <img class="clown-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Circus_clown_icon.png/600px-Circus_clown_icon.png" alt="clown" />
+    <img class="clown-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Circus_clown_icon.png/600px-Circus_clown_icon.png" alt="Clown" />
   </div>
 
-  <!-- Background music -->
-  <audio autoplay loop volume="0.2">
+  <!-- Music -->
+  <audio id="bg-music" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_1d2c93b07f.mp3?filename=funny-clown-112965.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+  <div class="music-note" onclick="toggleMusic()">Play Music</div>
 
-  <!-- Confetti script -->
+  <!-- Confetti Script -->
   <script>
     const confettiContainer = document.getElementById('confetti-container');
     const confettiCount = 40;
@@ -141,14 +155,28 @@
       dot.classList.add('dot');
 
       const left = Math.random() * 100;
-      const offset = Math.random() * -100;
+      const offsetY = Math.random() * -100;
       dot.style.left = `${left}%`;
-      dot.style.transform = `translateY(${offset}px)`;
+      dot.style.transform = `translateY(${offsetY}px)`;
 
       dot.style.animationDuration = `${6 + Math.random() * 4}s`;
       dot.style.animationDelay = `${Math.random() * 5}s`;
 
       confettiContainer.appendChild(dot);
+    }
+
+    // Music toggle
+    const music = document.getElementById('bg-music');
+    const note = document.querySelector('.music-note');
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        note.textContent = 'Pause Music';
+      } else {
+        music.pause();
+        note.textContent = 'Play Music';
+      }
     }
   </script>
 </body>
